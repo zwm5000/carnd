@@ -12,17 +12,18 @@ with open('./myTrain2/driving_log.csv') as csvfile:
 images = []
 measurements = []
 for line in lines:
-	source_path = line[0]
-	tokens = source_path.split('/')
-	filename = tokens[-1]
-	#print(filename)
-	local_path = "./myTrain2/IMG/" + filename
-	#print(local_path)
-	image = cv2.imread(local_path)
-	#print(image)
-	images.append(image)
-	measurement = line[3]
+	for i in range(3):	
+		source_path = line[i]
+		tokens = source_path.split('/')
+		filename = tokens[-1]
+		local_path = "./myTrain2/IMG/" + filename
+		image = cv2.imread(local_path)
+		images.append(image)
+		correction = 0.2
+	measurement = float(line[3])
 	measurements.append(measurement)
+	measurements.append(measurement+correction)
+	measurements.append(measurement-correction)
 
 augmented_images = []
 augmented_measurements = []
